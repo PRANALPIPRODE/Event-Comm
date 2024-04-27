@@ -1,0 +1,149 @@
+communicate event child to parent 
+numerator components
+html file
+<template>
+    <lightning-card title="Numerator" icon-name="action:manage_perm_sets">    
+        <p class="slds-text-align_center slds-var-m-vertical_medium">
+          Count: <lightning-formatted-number value={counter}></lightning-formatted-number>
+        </p>
+          <!-- controls go here -->
+          <c-controls 
+          class="slds-show slds-is-relative"
+          onadd={handleIncrement}
+          onsubtract={handleDecrement} 
+          onmultiply={handleMultiply}>
+          
+        </c-controls>
+      
+    </lightning-card> 
+</template>
+
+jsfile
+import { LightningElement } from 'lwc';
+
+export default class Numerator extends LightningElement {
+    counter = 0;
+    handleIncrement() {
+      this.counter++;
+    }
+    handleDecrement() {
+      this.counter--;
+    }
+    handleMultiply(event) {
+        const factor = event.detail;
+        this.counter *= factor;
+      }
+}
+
+meta.xml file
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+      </targets>
+</LightningComponentBundle>
+
+
+control components
+html file
+
+<template>
+    <lightning-card title="Controls" icon-name="action:upload">
+        <lightning-layout>
+         
+            <lightning-layout-item flexibility="auto" padding="around-small">
+            <lightning-button
+              label="Subtract"
+              icon-name="utility:dash"
+              onclick={handleSubtract}>
+            </lightning-button>
+          </lightning-layout-item>
+
+          <lightning-layout-item padding="around-small" onbuttonclick={handleMultiply}>
+            <template for:each={factors} for:item="factor">
+              <c-button
+                key={factor}
+                label={factor}
+                data-factor={factor}
+                icon="utility:close"
+                onclick={handleMultiply}>
+              </c-button>
+            </template>
+          </lightning-layout-item>
+         
+           <!-- <lightning-layout-item flexibility="auto" padding="around-small">
+           buttons go here  // use custom event
+            <lightning-button
+            label="2"
+            data-factor="2"
+            icon-name="utility:close"
+            onclick={handleMultiply}>
+          </lightning-button>
+          <lightning-button
+            label="3"
+            data-factor="3"
+            icon-name="utility:close"
+            onclick={handleMultiply}>
+          </lightning-button>
+          </lightning-layout-item>-->
+         
+          <lightning-layout-item flexibility="auto" padding="around-small">
+            <lightning-button
+              label="Add"
+              icon-name="utility:add"
+              onclick={handleAdd}
+              icon-position="right">
+            </lightning-button>
+          </lightning-layout-item>
+        
+        </lightning-layout>
+      </lightning-card>
+</template>
+
+js file
+import { LightningElement } from 'lwc';
+
+export default class Controls extends LightningElement {
+    factors = [0,2,3,4,5,6];
+    handleAdd() {
+        this.dispatchEvent(new CustomEvent('add'));
+      }
+      handleSubtract() {
+        this.dispatchEvent(new CustomEvent('subtract'));
+      }
+      handleMultiply(event) {
+        const factor = event.target.dataset.factor;
+        this.dispatchEvent(new CustomEvent('multiply', {
+          detail:factor 
+        }));
+      }
+}
+
+meta.xml file
+
+button components
+html file
+<template>
+    <lightning-button
+    label={label}
+    data-factor={label}
+    icon-name={icon}
+    onclick={handleButton}>
+  </lightning-button>
+</template>
+js file
+import { LightningElement,api} from 'lwc';
+
+export default class Button extends LightningElement {
+    @api label;
+    @api icon;
+    handleButton(event) {
+      this.dispatchEvent(new CustomEvent('buttonclick',{
+      bubbles: true
+      }));
+    }
+}
+
+
