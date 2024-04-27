@@ -1,5 +1,5 @@
-communicate event child to parent 
-numerator components
+A//communicate event child to parent using @api in child and called from parent
+numerator components parent
 html file
 <template>
     <lightning-card title="Numerator" icon-name="action:manage_perm_sets">    
@@ -46,7 +46,7 @@ meta.xml file
 </LightningComponentBundle>
 
 
-control components
+B//control components  child for numerarot using parent child by custom event use on js file for this file child is button
 html file
 
 <template>
@@ -54,7 +54,7 @@ html file
         <lightning-layout>
          
             <lightning-layout-item flexibility="auto" padding="around-small">
-            <lightning-button
+            <lightning-button 
               label="Subtract"
               icon-name="utility:dash"
               onclick={handleSubtract}>
@@ -75,17 +75,9 @@ html file
          
            <!-- <lightning-layout-item flexibility="auto" padding="around-small">
            buttons go here  // use custom event
-            <lightning-button
-            label="2"
-            data-factor="2"
-            icon-name="utility:close"
-            onclick={handleMultiply}>
+            <lightning-button  label="2" data-factor="2" icon-name="utility:close" onclick={handleMultiply}>
           </lightning-button>
-          <lightning-button
-            label="3"
-            data-factor="3"
-            icon-name="utility:close"
-            onclick={handleMultiply}>
+          <lightning-button label="3"  data-factor="3"  icon-name="utility:close" onclick={handleMultiply}>
           </lightning-button>
           </lightning-layout-item>-->
          
@@ -121,9 +113,9 @@ export default class Controls extends LightningElement {
       }
 }
 
-meta.xml file
 
-button components
+
+C//button components child 
 html file
 <template>
     <lightning-button
@@ -145,5 +137,7 @@ export default class Button extends LightningElement {
       }));
     }
 }
+
+//comumicate parent to child by using custom event
 
 
