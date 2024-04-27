@@ -1,0 +1,50 @@
+fectching contact record by name search
+html file
+<template>
+    <lightning-card title="ApexWireMethodToProperty contact list" icon-name="custom:custom63">
+     <lightning-input type="search" onchange={handlechange}></lightning-input>
+      <div class="slds-m-around_medium">
+
+        <template lwc:if={contacts.data}>
+          <template for:each={contacts.data} for:item="contact">
+            <p key={contact.Id}>{contact.Name}</p>
+          </template>
+        </template>
+       
+      </div>
+    </lightning-card>
+  </template>
+jsfile
+import { LightningElement, wire } from "lwc";
+import getContactList from "@salesforce/apex/ContactController.getContactList";
+
+export default class ApexWireMethodToProperty extends LightningElement {
+    searchkey="";
+
+    //wire adapter
+  @wire(getContactList, { searchkey: '$searchkey' }) contacts;
+
+  handlechange(event){
+this.searchkey = event.target.value;
+  }
+}
+
+apex/class  ContactController
+
+  public with sharing class contactController {
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getContacts(string accId){
+        try {
+            return[
+                SELECT AccountId, Id, FirstName, LastName
+                FROM Contact
+                WHERE AccountId =: accId
+                WITH SECURITY_ENFORCED] ;
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+    
+}
+  
