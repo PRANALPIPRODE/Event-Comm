@@ -1,0 +1,178 @@
+<template>
+    hello world environmental CI10
+</template>
+
+jsfile
+
+import { LightningElement } from 'lwc';
+
+export default class FirstComponant extends LightningElement {
+  connectedCallback(){
+   /* var a ='salesforce';
+    console.log('a--'+a);
+    console.log('a--'+typeof a);
+    a = 3;
+    console.log('a--'+a);
+    console.log('a--'+typeof a);
+    var b = 1;
+    console.log('b--'+typeof b);
+    var c = true;
+    console.log('b--'+typeof c);
+    var d; // undefined
+    console.log('d--'+typeof d);
+    if(b == 1){
+        a = 'hello world environmental CI10';
+       const con = 'hi';
+      //const con =7; i.e const cannot redeclared
+      // con = 7;  const cannot be re assigned
+        var a = 9; // redeclaring var
+        console.log('a--'+a);
+        console.log('a--'+typeof a);
+       // let f = 9; -- redeclaring let is not possible
+        var e = 7;
+        let f = 7;
+        console.log('a--'+con);
+        console.log('Hii');
+        console.log('ff--'+typeof f);
+    }
+    console.log('d--'+typeof e);
+
+    
+    var arr = [0,1,2,3,4,5,6];   //array index start from 0 & for traversing create for loop
+    console.log('arr---'+arr);
+    arr[4] = 7;                  //i.e replace 7 no in 4 no of index 0,1,2,3,7,5,6
+    console.log('arr--'+arr);
+    //arr[10]= 9;                  // show arr--0,1,2,3,7,5,6,,,,9
+    console.log('arr--'+arr);
+    console.log('arr---'+arr[9]); //undefined value ,,
+
+    //arr.lenght =7 
+    for(let i=0; i<arr.length;i++){
+     console.log('arr--'+arr[i]);
+     if(arr[i]==5){
+      console.log('no 5 index exists'); // i.e 4 no remove from arr
+     }
+    }
+
+    // console.log('f--'+f); -- outside scope
+  //  console.log('d--'+typeof f); -- outside scope
+
+ 
+  var obj = {                    //this is like wrapper class
+    'Name' : 'Pranal',
+    'Age' : 30,
+    'Contacts' : [6563332521,9999999999],
+    'ParentInfor' : {
+      'MotherName' : 'xyz'
+    },
+    'MarritalStatus': false,
+    30 : 'Age'
+  };
+  console.log('Name--'+obj.Name); //print name -pranal
+  console.log('Age--'+obj.Age);
+  console.log('contact--'+obj.Contacts);
+  console.log('contact1--'+obj.Contacts[0]);
+  console.log('Parentinfo--'+obj.ParentInfor.MotherName);
+  console.log('30--'+obj[30]); */ //when key is number
+
+  //console.log('Name---'+name); name is deprecated not used
+   
+  this.pranalMethod();
+  this.parameterMethod(1,2);
+ var value = this.returnMethod(4,5);
+  console.log('value--'+value);
+ this.paraMethod('Hello','developer');
+
+  
+  var ex;
+  if(ex){
+    console.log('inside if')
+  }else{
+    console.log('inside else');
+  }
+  var str='';
+  if(str){
+    console.log('Inside if');   
+  }else{
+    console.log('inside else');
+  }
+  var int = 0;
+  if(int){
+    console.log('inside if');
+  }else{
+    console.log('inside else');
+  }
+  var arr =[];
+  if(arr.length){
+    console.log('inside if');  
+  }else{
+    console.log('inside else');
+  }
+
+
+  var a= 6;
+  var b = '6';
+  if(a==b){
+    console.log('inside if==');  
+  }else{
+    console.log('inside else==');
+  }
+  if(a===b){
+    console.log('inside if===');  
+  }else{
+    console.log('inside else===');
+  }
+  
+   this.addition(2,3);
+   this.substraction(3,1);
+   this.division(6,2);
+   this.multiplication(5,2);
+   this.arithmaticOperation(4,5,'Add');
+   
+   var array =[1,2,5,5,7,9,6];
+   var newArray=[];
+   for(let i=0;i<array.length;i++){
+    if(array[i]==5){
+      newArray.push(array[i]);
+    }
+   }
+   console.log('array--'+newArray);
+
+  }
+  pranalMethod(){                  //this is method
+    console.log('hi inside method');
+  }
+  parameterMethod(num1,num2){
+    var c = num1+num2;
+    console.log('num--'+c);
+  }
+  returnMethod(num1,num2){
+    var c = num1+num2;
+    console.log('return num'+c);
+    return c;
+  }
+  addition(num1,num2){
+let result = num1+num2;
+console.log('add--'+result);
+  }
+  substraction(num1,num2){
+    let result = num1-num2;
+    console.log('sub--'+result);
+  }
+  division(num1,num2){
+    let result = num1/num2;
+    console.log('div--'+result);
+  }
+  multiplication(num1,num2){
+    let result = num1*num2;
+    console.log('mult--'+result);
+  }
+  arithmaticOperation(num1,num2,operator){
+    if(operator =='Add'){
+    let result = num1+num2;
+    console.log('mult--'+result);
+    }
+  }
+
+
+}
