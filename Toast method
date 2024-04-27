@@ -1,0 +1,127 @@
+Toast Method
+html
+<template>
+    <lightning-card title="Toast MSG" icon-name="standard:account">
+        <lightning-button label="Show Error" onclick={showErrormsg}></lightning-button>
+        <lightning-button label="Show success" onclick={showSuccessmsg}></lightning-button>
+        <lightning-button label="Show Warning" onclick={showWarningmsg}></lightning-button>
+        <lightning-button label="Show Info" onclick={showInfomsg}></lightning-button>
+    </lightning-card>
+</template>
+
+jsfile
+import { LightningElement } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+export default class Toast1LWC extends LightningElement {
+
+showErrormsg(){
+        const evt = new ShowToastEvent ({
+            title: 'Toast Error' ,
+            message: 'Some unexpected error occured, please check',
+            varient: 'error' ,
+            mode: 'dismissable'       // stick, diseble 
+
+        });
+        this.dispatchEvent(evt);
+    }
+    showSuccessmsg(){
+        const evt = new ShowToastEvent ({
+            title : 'Toast Success',
+            message : 'Congratulation you are able to make it',
+            varient: 'success',
+            mode : 'dismissable'       // stick, diseble 
+
+        })
+        this.dispatchEvent(evt);
+    }
+    showWarningmsg(){
+        const evt = new ShowToastEvent ({
+            title : 'Toast Warning',
+            message : 'Please dont do that ! something is wrong..',
+            varient: 'warning',
+            mode : 'dismissable'       // stick, diseble 
+
+        })
+        this.dispatchEvent(evt);
+    }
+    showInfomsg(){
+        const evt = new ShowToastEvent ({
+            title : 'Toast Info',
+            message : 'Please Read all the details carefully..',
+            varient: 'info',
+            mode : 'dismissable'       // stick, diseble 
+
+        })
+        this.dispatchEvent(evt);
+    }
+   
+}
+
+//toast method with value lwctoast 
+html
+
+<template>
+   <!----> {ci10ALabel}
+    <lightning-card lable='value shoud be equa'>
+    
+    <lightning-layout>
+        <lightning-layout-item>
+            <lightning-input class="classOne" type="text" title="InputOne" label="InputOne" onchange={handleOne}>
+
+            </lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <lightning-input type="text" class="classTwo" title="InputTwo" label="InputTwo" onchange={handleTwo}>
+
+            </lightning-input>
+            <lightning-button label="Show Toast" onclick={handleClick}></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
+    </lightning-card>
+</template> 
+
+jsfile
+import { LightningElement } from 'lwc';
+import ci10A from '@salesforce/label/c.ci10A';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+export default class AdhocLWC extends LightningElement {
+    ci10ALabel= ci10A;
+    valueOne;
+    valueTwo;
+    handleClick(){
+        let inpOne = this.template.querySelector('.classOne');
+        let inpTwo = this.template.querySelector('.classTwo');
+        inpOne.setCustomValidity("");
+        inpTwo.setCustomValidity("");
+        inpOne.reportValidity();
+        inpTwo.reportValidity();
+      if(this.valueOne == this.valueTwo){
+        this.showToast('Success','Values are same','success');
+      }else{
+        this.showToast('Error','Values are not same','error');
+      
+       inpOne.setCustomValidity("Values are not same");
+       inpTwo.setCustomValidity("Values are not same");
+       inpOne.reportValidity();
+       inpTwo.reportValidity();
+
+      }
+    }
+    handleOne(event){
+        this.valueOne = event.target.value;
+    }
+    handleTwo(event){
+        this.valueTwo = event.target.value;
+    }
+    showToast(header,subHeader,way){
+        let eve = new ShowToastEvent({
+            title : header,
+            message : subHeader,
+            variant : way 
+        });
+        this.dispatchEvent(eve);
+    }
+    
+    }
+
+
