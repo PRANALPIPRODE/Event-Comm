@@ -1,0 +1,144 @@
+calculator parentcomp componentt
+htmlfile
+<template>
+    <lightning-layout>
+       
+        <lightning-layout-item size="4"></lightning-layout-item>
+       
+        <lightning-layout-item size="4">
+            
+            <lightning-layout multiple-rows="true">
+               
+                <lightning-layout-item size="12">
+                    <lightning-input type="number" label="Enter First number" onchange={handleChangeOne}></lightning-input>
+                </lightning-layout-item>
+                
+                <lightning-layout-item size="12">
+                    <lightning-input type="number" label="Enter Second Number" onchange={HandleChangeTwo}></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+                    <lightning-button  variant="brand" label="Addition" onclick={handleAdd}></lightning-button>
+                    <lightning-button variant="brand" label="Substract" onclick={handleSub}></lightning-button>
+                    <lightning-button variant="brand" label="multiplication" onclick={handleMul}></lightning-button>
+                    <lightning-button variant="brand" label="Division" onclick={handleDivision}></lightning-button>
+                </lightning-layout-item>
+
+                <lightning-layout-item>
+                    <c-calci-result result={result} result-value={result} result-track={result}></c-calci-result>
+                </lightning-layout-item>
+
+            </lightning-layout>
+       
+        </lightning-layout-item>
+       
+        <lightning-layout-item size="4"></lightning-layout-item>
+    
+    </lightning-layout>
+</template>
+
+jsfile
+
+import { LightningElement } from 'lwc';
+
+export default class NewComponent extends LightningElement {
+
+    numOneValue;
+    numTwoValue;
+    result;
+    
+    handleChangeOne(event){
+        
+        console.log(event.target.value);
+        this.numOneValue = event.target.value;
+    }
+    HandleChangeTwo(event){
+        this.numTwoValue = event.target.value;
+    }
+    handleAdd(){
+      console.log(this.numOneValue+this.numTwoValue);
+      this.result = parseInt(this.numOneValue)+parseInt(this.numTwoValue);
+    }
+    handleSub(){
+        console.log(this.numOneValue-this.numTwoValue);
+        this.result = parseInt(this.numOneValue)-parseInt(this.numTwoValue);
+      }
+      handleMul(){
+        console.log(this.numOneValue*this.numTwoValue);
+        this.result = parseInt(this.numOneValue)*parseInt(this.numTwoValue);
+      }
+      handleDivision(){
+        console.log(this.numOneValue/this.numTwoValue);
+        this.result = parseInt(this.numOneValue)/parseInt(this.numTwoValue);
+      }
+}
+
+meta.xmlfile
+
+  <?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+</LightningComponentBundle>
+
+calciResult componentschild
+htmlfile
+<template>
+    
+   
+    <template if:true={result}>
+     result value ={result}
+    </template>
+    
+    <template if:false={result}>
+    Enter number to perform operations
+</template>
+
+<!--<template if:true={resultValue}>
+    result is ---{result}
+   </template>
+   
+   <template if:false={resultValue}>
+   Enter number to perform operations
+</template>
+
+ value{resultTrack} -->    <!--private decorator dont accept value from parent-->
+</template>
+
+js file
+import { LightningElement,api } from 'lwc';
+
+export default class CalciResult extends LightningElement {
+    @api result;
+    @api resultValue;
+    resultTrack;
+}
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
