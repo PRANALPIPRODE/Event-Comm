@@ -1,0 +1,62 @@
+html
+  <template>
+    <lightning-card  variant="Narrow"  title="Data Binding Dynamically" icon-name="standard:account">
+       
+        <p class="slds-p-horizontal_small">Hello, {myValue}!</p>
+        <br/>
+        
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" label="Enter some text" value={myValue} onchange={handleChange}></lightning-input>
+    </div>  
+    </lightning-card>
+</template>
+
+  js
+  import { LightningElement } from 'lwc';
+
+export default class BindHTMLDynamic extends LightningElement {
+    myValue = 'Salesforce developer'
+    handleChange(event){
+        this.myValue = event.target.value;
+    }
+}
+
+
+// with getter method
+  html file
+<template>
+    <lightning-card  variant="Narrow"  title="Data Binding using getter Epression" icon-name="standard:account">
+       
+        <p class="slds-p-horizontal_small">Hello, {uppercaseName}!</p>
+        <br/>
+        
+    <div class="slds-p-around_medium lgc-bg">
+        <lightning-input type="text" name="firstName" label="First Name" onchange={handleChange}></lightning-input>
+        <br/>
+        <lightning-input type="text" name="lastName" label="Last Name" onchange={handleChange}></lightning-input>
+    </div>  
+    </lightning-card> 
+</template>
+
+    jsfile
+    import { LightningElement,api } from 'lwc';
+
+export default class GetterExpression extends LightningElement {
+    @api 
+    firstName = '';
+    lastName = '';
+    handleChange(event){
+        const field = event.target.name;
+        if(field === 'firstName'){
+            this.firstName = event.target.value;
+        }
+        else if (field === 'lastName'){
+            this.lastName = event.target.value;
+        }
+    }
+
+    get uppercaseName(){
+        return `${this.firstName} ${this.lastName}`.toUpperCase(); 
+}
+}
+ 
