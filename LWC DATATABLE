@@ -1,0 +1,81 @@
+ACCOUNTHELPER CLASS
+
+public with sharing class AccountHelper {
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccountList() {
+        return [SELECT Id, Name, Type, Rating,
+                Phone, Website, AnnualRevenue
+            FROM Account];
+    }
+}
+
+HTMLFILE
+
+<template>
+    <h2> Account Datatable</h2>
+    <template if:true={accList}>
+        <lightning-datatable data={accList} columns={columns} key-field="Id">
+        </lightning-datatable>
+    </template>
+    <template if:true={error}>
+        {error}
+    </template>
+</template>
+
+//JSFILE
+
+import { LightningElement ,api, wire, track} from 'lwc';
+import getAccountList from '@salesforce/apex/AccountHelper.getAccountList';
+export default class LightningDatatableLWCExample extends LightningElement {
+    @track columns = [{
+            label: 'Account name',
+            fieldName: 'Name',
+            type: 'text',
+            sortable: true
+        },
+        {
+            label: 'Type',
+            fieldName: 'Type',
+            type: 'text',
+            sortable: true
+        },
+        {
+            label: 'Annual Revenue',
+            fieldName: 'AnnualRevenue',
+            type: 'Currency',
+            sortable: true
+        },
+        {
+            label: 'Phone',
+            fieldName: 'Phone',
+            type: 'phone',
+            sortable: true
+        },
+        {
+            label: 'Website',
+            fieldName: 'Website',
+            type: 'url',
+            sortable: true
+        },
+        {
+            label: 'Rating',
+            fieldName: 'Rating',
+            type: 'test',
+            sortable: true
+        }
+    ];
+ 
+    @track error;
+    @track accList ;
+    @wire(getAccountList)
+    wiredAccounts({
+        error,
+        data
+    }) {
+        if (data) {
+            this.accList = data;
+        } else if (error) {
+            this.error = error;
+        }
+    }
+}
