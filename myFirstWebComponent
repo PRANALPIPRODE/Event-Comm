@@ -1,0 +1,44 @@
+html file
+<template>
+    <lightning-card title="ContactInformation" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+           <template for:each={contacts} for:item="contact">
+              <div key={contact.id}>
+                 {contact.Name}, {contact.Title}
+              </div>
+           </template>
+        </div>
+     </lightning-card>
+</template>
+
+jsfile
+
+import { LightningElement,track } from 'lwc';
+export default class MyFirstWebComponent extends LightningElement {
+    @track
+    contacts = [
+        {
+            Id: 1,
+            Name: 'Amy Taylor',
+            Title: 'VP of Engineering',
+        },
+        {
+            Id: 2,
+            Name: 'Michael Jones',
+            Title: 'VP of Sales',
+        },
+        {
+            Id: 3,
+            Name: 'Jennifer Wu',
+            Title: 'CEO',
+        },
+    ];
+}
+
+
+show contct result //
+ContactInformation
+Amy Taylor, VP of Engineering
+Michael Jones, VP of Sales
+Jennifer Wu, CEO
+
